@@ -1,4 +1,4 @@
-import { UserType } from '@/types/database/user'
+import { UserTypeWithTeams } from '@/types/database/user'
 
 import connect_db from '../database'
 import UserModel from '../database/models/user'
@@ -28,13 +28,15 @@ export const getUser = async () => {
     try {
         const session = await checkSession()
 
-        const user = await UserModel.findOne({ email: session.user.email }).select('-password')
+        const user = await UserModel.findOne({ email: session.user.email })
+            .select('-password')
+            .populate('teams')
 
         if (!user) {
             throw new Error('User not found')
         }
 
-        const plainUser = JSON.parse(JSON.stringify(user)) as UserType
+        const plainUser = JSON.parse(JSON.stringify(user)) as UserTypeWithTeams
 
         return { success: true, message: 'User fetched successfully', data: plainUser }
     } catch (error) {

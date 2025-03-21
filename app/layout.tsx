@@ -14,8 +14,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-    title: 'Code Nard',
-    description: 'Get best templates for you project'
+    title: 'Techno x AI',
+    description: 'Techno x AI Hackathon'
 }
 
 export default async function RootLayout({

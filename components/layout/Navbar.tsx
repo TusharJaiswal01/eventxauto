@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, X } from 'lucide-react'
+import { Layers3, LogIn, LogOut, Menu, UserPlus, X } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -9,121 +9,143 @@ import { Button } from '@/components/ui/button'
 
 const items = [
     {
-        name: 'Home',
-        href: '/',
-        protected: false
-    },
-    {
-        name: 'Order History',
-        href: '/history',
+        name: 'Round',
+        href: '/round1',
+        icon: <Layers3 className="mr-2 h-4 w-4 text-blue-500" />,
         protected: true
-    },
-    {
-        name: 'Request a Template',
-        href: '/pricing',
-        protected: false
     }
 ]
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-
     const { status } = useSession()
 
     return (
-        <nav className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-xl">
+        <nav className="sticky top-0 z-50 border-b border-white/40 bg-white/30 shadow-md backdrop-blur-lg">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="flex h-16 justify-between">
-                    <div className="flex">
-                        <div className="flex flex-shrink-0 items-center">
-                            <Link href="/" className="text-primary text-xl font-bold">
-                                Code Nard
-                            </Link>
-                        </div>
-                        <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                <div className="flex h-16 items-center justify-between">
+                    {/* Logo */}
+                    <div className="flex items-center space-x-4">
+                        <Link
+                            href="/"
+                            className="text-2xl font-bold text-blue-800 hover:text-blue-900"
+                        >
+                            Techno x AI
+                        </Link>
+
+                        <div className="hidden sm:flex sm:space-x-6">
                             {items.map((item, index) =>
                                 item.protected && status !== 'authenticated' ? null : (
                                     <Link
                                         key={index}
                                         href={item.href}
-                                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                                        className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-blue-700 transition hover:bg-blue-100 hover:text-blue-900"
                                     >
+                                        {item.icon}
                                         {item.name}
                                     </Link>
                                 )
                             )}
                         </div>
                     </div>
-                    <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
+
+                    {/* Auth Actions Desktop */}
+                    <div className="hidden items-center space-x-4 sm:flex">
                         {status === 'authenticated' ? (
-                            <Button onClick={() => signOut()} className="text-sm font-medium">
+                            <Button
+                                onClick={() => signOut()}
+                                className="flex items-center gap-2 text-sm font-semibold hover:bg-red-100 hover:text-red-600"
+                                variant="ghost"
+                            >
+                                <LogOut className="h-4 w-4" />
                                 Sign Out
                             </Button>
                         ) : (
                             <>
                                 <Link href="/signin">
-                                    <Button variant="ghost" className="text-sm font-medium">
+                                    <Button
+                                        variant="ghost"
+                                        className="flex items-center gap-2 text-sm"
+                                    >
+                                        <LogIn className="h-4 w-4" />
                                         Sign in
                                     </Button>
                                 </Link>
                                 <Link href="/signup">
-                                    <Button className="text-sm font-medium">Sign up</Button>
+                                    <Button className="flex items-center gap-2 text-sm">
+                                        <UserPlus className="h-4 w-4" />
+                                        Sign up
+                                    </Button>
                                 </Link>
                             </>
                         )}
                     </div>
-                    <div className="-mr-2 flex items-center sm:hidden">
+
+                    {/* Mobile Menu Toggle */}
+                    <div className="flex sm:hidden">
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => setIsMenuOpen(!isMenuOpen)}
                             aria-expanded={isMenuOpen}
                         >
-                            <span className="sr-only">Open main menu</span>
+                            <span className="sr-only">Toggle menu</span>
                             {isMenuOpen ? (
-                                <X className="block h-6 w-6" aria-hidden="true" />
+                                <X className="h-6 w-6 text-blue-700" />
                             ) : (
-                                <Menu className="block h-6 w-6" aria-hidden="true" />
+                                <Menu className="h-6 w-6 text-blue-700" />
                             )}
                         </Button>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile menu */}
+            {/* Mobile Dropdown */}
             {isMenuOpen && (
-                <div className="sm:hidden">
-                    <div className="space-y-1 pt-2 pb-3">
+                <div className="border-t border-white/30 bg-white/40 shadow-inner backdrop-blur-md sm:hidden">
+                    <div className="space-y-2 px-4 py-4">
                         {items.map((item, index) =>
                             item.protected && status !== 'authenticated' ? null : (
                                 <Link
                                     key={index}
                                     href={item.href}
-                                    className="block border-l-4 border-transparent py-2 pr-4 pl-3 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700"
+                                    className="flex items-center rounded-md px-3 py-2 text-sm font-medium text-blue-800 transition hover:bg-blue-100"
                                 >
+                                    {item.icon}
                                     {item.name}
                                 </Link>
                             )
                         )}
-                    </div>
-                    <div className="border-t border-gray-200 pt-4 pb-3">
-                        <div className="flex items-center px-4">
-                            <div className="flex-shrink-0">
-                                <Link
-                                    href="/signin"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
+
+                        <div className="border-t border-white/40 pt-4">
+                            {status === 'authenticated' ? (
+                                <Button
+                                    onClick={() => signOut()}
+                                    className="flex w-full items-center gap-2 text-left text-sm hover:bg-red-100 hover:text-red-600"
+                                    variant="ghost"
                                 >
-                                    Sign in
-                                </Link>
-                            </div>
-                            <div className="mt-3 space-y-1">
-                                <Link
-                                    href="/signup"
-                                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800"
-                                >
-                                    Sign up
-                                </Link>
-                            </div>
+                                    <LogOut className="h-4 w-4" />
+                                    Sign Out
+                                </Button>
+                            ) : (
+                                <>
+                                    <Link href="/signin">
+                                        <Button
+                                            variant="ghost"
+                                            className="flex w-full items-center gap-2 text-sm"
+                                        >
+                                            <LogIn className="h-4 w-4" />
+                                            Sign in
+                                        </Button>
+                                    </Link>
+                                    <Link href="/signup">
+                                        <Button className="flex w-full items-center gap-2 text-sm">
+                                            <UserPlus className="h-4 w-4" />
+                                            Sign up
+                                        </Button>
+                                    </Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

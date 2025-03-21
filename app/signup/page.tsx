@@ -1,138 +1,58 @@
 'use client'
 
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { toast } from 'sonner'
+import { CalendarDays, Sparkles, Users } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { signUpAction } from '@/server/actions/user'
-
-export default function SignUp() {
-    const router = useRouter()
-
-    const [data, setData] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-    })
-
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        if (data.password !== data.confirmPassword) {
-            toast.warning('Password and confirm password do not match')
-            return
-        }
-
-        try {
-            const res = await signUpAction(data.name, data.email, data.password)
-
-            if (res.success) {
-                toast.success(res.message)
-                setData({
-                    name: '',
-                    email: '',
-                    password: '',
-                    confirmPassword: ''
-                })
-
-                router.push('/signin')
-            } else {
-                toast.error(res.message)
-            }
-        } catch (error) {
-            const err = error as Error
-            toast.error(err.message)
-            console.error({ err })
-        }
-    }
-
+export default function LandingPage() {
     return (
-        <div className="flex min-h-[90vh] w-full items-center justify-center p-6 md:p-10">
-            <div className="w-full max-w-sm">
-                <div className={'flex flex-col gap-6'}>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-2xl">Sign up</CardTitle>
-                            <CardDescription>
-                                Enter your email and password to sign up
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <form onSubmit={handleSubmit}>
-                                <div className="flex flex-col gap-6">
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="name">Name</Label>
-                                        <Input
-                                            id="name"
-                                            type="text"
-                                            placeholder="John Doe"
-                                            required
-                                            value={data.name}
-                                            onChange={e =>
-                                                setData({ ...data, name: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="email">Email</Label>
-                                        <Input
-                                            id="email"
-                                            type="email"
-                                            placeholder="m@example.com"
-                                            required
-                                            value={data.email}
-                                            onChange={e =>
-                                                setData({ ...data, email: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="password">Password</Label>
-                                        <Input
-                                            id="password"
-                                            type="password"
-                                            required
-                                            value={data.password}
-                                            onChange={e =>
-                                                setData({ ...data, password: e.target.value })
-                                            }
-                                        />
-                                    </div>
-                                    <div className="grid gap-2">
-                                        <Label htmlFor="confirmPassword">Confirm Password</Label>
-                                        <Input
-                                            id="confirmPassword"
-                                            type="password"
-                                            required
-                                            value={data.confirmPassword}
-                                            onChange={e =>
-                                                setData({
-                                                    ...data,
-                                                    confirmPassword: e.target.value
-                                                })
-                                            }
-                                        />
-                                    </div>
-                                    <Button type="submit" className="w-full">
-                                        Sign up
-                                    </Button>
-                                </div>
-                                <div className="mt-4 text-center text-sm">
-                                    Already have an account?
-                                    <Link href="/signin" className="underline underline-offset-4">
-                                        Sign In
-                                    </Link>
-                                </div>
-                            </form>
-                        </CardContent>
-                    </Card>
+        <div className="min-h-screen bg-gradient-to-br from-slate-100/30 to-white/20 p-6 backdrop-blur-sm md:p-10">
+            <div className="mx-auto mb-12 max-w-5xl text-center">
+                <h1 className="text-4xl font-bold md:text-5xl">Event Management Platform</h1>
+                <p className="text-muted-foreground mt-4 text-lg">
+                    Seamlessly manage mentors, volunteers, and teams for your events.
+                </p>
+            </div>
+
+            <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:grid-cols-3">
+                {/* Feature Card 1 */}
+                <div className="rounded-2xl border bg-white/30 p-6 shadow-lg backdrop-blur-xl transition-all hover:scale-[1.02]">
+                    <div className="mb-4 flex items-center gap-3">
+                        <CalendarDays className="text-primary h-6 w-6" />
+                        <h3 className="text-xl font-semibold">Plan and Schedule</h3>
+                    </div>
+                    <p className="text-muted-foreground">
+                        Organize and track your event timeline, sessions, and participants with
+                        ease.
+                    </p>
                 </div>
+
+                {/* Feature Card 2 */}
+                <div className="rounded-2xl border bg-white/30 p-6 shadow-lg backdrop-blur-xl transition-all hover:scale-[1.02]">
+                    <div className="mb-4 flex items-center gap-3">
+                        <Users className="text-primary h-6 w-6" />
+                        <h3 className="text-xl font-semibold">Team & Mentor Management</h3>
+                    </div>
+                    <p className="text-muted-foreground">
+                        Easily assign mentors to teams and track team performance.
+                    </p>
+                </div>
+
+                {/* Feature Card 3 */}
+                <div className="rounded-2xl border bg-white/30 p-6 shadow-lg backdrop-blur-xl transition-all hover:scale-[1.02]">
+                    <div className="mb-4 flex items-center gap-3">
+                        <Sparkles className="text-primary h-6 w-6" />
+                        <h3 className="text-xl font-semibold">Smooth Onboarding</h3>
+                    </div>
+                    <p className="text-muted-foreground">
+                        Get started instantly with a clean and intuitive user experience.
+                    </p>
+                </div>
+            </div>
+
+            <div className="mt-20 text-center">
+                <p className="text-xl font-semibold">Ready to elevate your next event?</p>
+                <p className="text-muted-foreground mt-2">
+                    Sign in or sign up to begin managing your teams and mentors effortlessly.
+                </p>
             </div>
         </div>
     )
