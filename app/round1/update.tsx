@@ -78,94 +78,43 @@ const Update: FC<Props> = ({ data, isOpen, setIsOpen }) => {
     return (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
             <DialogTrigger></DialogTrigger>
-            <DialogContent>
+            <DialogContent className="bg-gray-900 border-gray-700 text-gray-200">
                 <DialogHeader>
-                    <DialogTitle>Update Data</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-white">Update Data</DialogTitle>
+                    <DialogDescription className="text-gray-400">
                         Update the following fields with new data.
                     </DialogDescription>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="originality" className="text-right">
-                            Originality
-                        </label>
-                        <Input
-                            id="originality"
-                            name="originality"
-                            value={formData.originality}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="problemSolutionFit" className="text-right">
-                            Problem Solution Fit
-                        </label>
-                        <Input
-                            id="problemSolutionFit"
-                            name="problemSolutionFit"
-                            value={formData.problemSolutionFit}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="feasibility" className="text-right">
-                            Feasibility
-                        </label>
-                        <Input
-                            id="feasibility"
-                            name="feasibility"
-                            value={formData.feasibility}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="teamPotential" className="text-right">
-                            Team Potential
-                        </label>
-                        <Input
-                            id="teamPotential"
-                            name="teamPotential"
-                            value={formData.teamPotential}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="presentation" className="text-right">
-                            Presentation
-                        </label>
-                        <Input
-                            id="presentation"
-                            name="presentation"
-                            value={formData.presentation}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                        <label htmlFor="remark" className="text-right">
-                            Remark
-                        </label>
-                        <Input
-                            id="remark"
-                            name="remark"
-                            value={formData.remark}
-                            onChange={handleInputChange}
-                            className="col-span-3"
-                        />
-                    </div>
+                    {[
+                        { label: "Originality", name: "originality" },
+                        { label: "Problem Solution Fit", name: "problemSolutionFit" },
+                        { label: "Feasibility", name: "feasibility" },
+                        { label: "Team Potential", name: "teamPotential" },
+                        { label: "Presentation", name: "presentation" },
+                        { label: "Remark", name: "remark" }
+                    ].map((field) => (
+                        <div key={field.name} className="grid grid-cols-4 items-center gap-4">
+                            <label htmlFor={field.name} className="text-right text-gray-300">
+                                {field.label}
+                            </label>
+                            <Input
+                                id={field.name}
+                                name={field.name}
+                                value={formData[field.name as keyof typeof formData]}
+                                onChange={handleInputChange}
+                                className="col-span-3 bg-gray-800 text-gray-200 border-gray-600 focus:ring-blue-500 focus:border-blue-500"
+                            />
+                        </div>
+                    ))}
                 </div>
                 <DialogFooter>
                     <DialogClose asChild>
-                        <Button type="button" variant="outline">
+                        <Button type="button" variant="outline" className="border-gray-600 text-gray-900 hover:bg-gray-700">
                             Cancel
                         </Button>
                     </DialogClose>
-                    <Button type="button" onClick={handleSubmit}>
+                    <Button type="button" onClick={handleSubmit} className="bg-blue-600 hover:bg-blue-500 text-white">
                         Update
                     </Button>
                 </DialogFooter>

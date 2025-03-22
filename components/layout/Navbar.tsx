@@ -71,12 +71,7 @@ export default function Navbar() {
                                         Sign in
                                     </Button>
                                 </Link>
-                                <Link href="/signup">
-                                    <Button className="flex items-center gap-2 text-sm">
-                                        <UserPlus className="h-4 w-4" />
-                                        Sign up
-                                    </Button>
-                                </Link>
+                               
                             </>
                         )}
                     </div>

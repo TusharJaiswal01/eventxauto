@@ -49,7 +49,7 @@ const Page: FC = () => {
     }
 
     return (
-        <div className="min-h-screen w-full bg-gradient-to-br from-blue-100 via-white to-blue-200 px-6 py-12">
+        <div className="min-h-screen w-full bg-blue-300 px-6 py-12">
             <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
                 {/* Team Form */}
                 <Card className="rounded-xl border border-white/30 bg-white/40 shadow-xl backdrop-blur-md transition-all">

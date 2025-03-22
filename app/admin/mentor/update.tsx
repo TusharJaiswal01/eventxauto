@@ -41,8 +41,8 @@ const Update: FC<Props> = ({ data, isOpen, setIsOpen }) => {
         }
 
         try {
-            //@ts-ignore
-            await assignTeamAction(data._id, formData)
+           
+            await assignTeamAction(data._id, formData )
             toast.success('Team assigned successfully!')
             setIsOpen(false)
             window.location.reload()
