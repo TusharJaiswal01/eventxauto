@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Calendar, ChartBar } from 'lucide-react';
+import { ArrowRight, Calendar } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
